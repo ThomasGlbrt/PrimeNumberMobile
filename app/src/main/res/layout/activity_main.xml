@@ -32,6 +32,7 @@
                 android:layout_weight="1"
                 android:maxLength="6"
                 android:ems="10"
+                android:hint="6 chiffres maximum"
                 android:inputType="number" />
         </LinearLayout>
 
