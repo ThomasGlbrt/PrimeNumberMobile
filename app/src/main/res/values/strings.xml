@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FirstNumber</string>
+    <string name="testing_number">%1$d </string>
+</resources>
