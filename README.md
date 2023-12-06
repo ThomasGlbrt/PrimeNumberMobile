@@ -1,5 +1,5 @@
 # PrimeNumberMobile
-Mobile Application to calculate Prime Numbers in the range of the given one
+Mobile Application to calculate Prime Numbers gin the range of the given one
  
 ## Authors
 

@@ -1,7 +1,7 @@
 package com.example.firstnumber;
 
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView viewResult;
     private TextView viewProgress;
     private TextView viewTime;
+
+    private ArrayAdapter<String> adapter;  // Utilisation d'un ArrayAdapter de String
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,32 +43,41 @@ public class MainActivity extends AppCompatActivity {
                 String input = inputNumber.getText().toString();
                 if (!input.isEmpty()) {
                     int n = Integer.parseInt(input);
-                    //Envoie la donnée entrée dans l'input
+                    // Envoie la donnée entrée dans l'input
                     new PrimeNumberAsyncTask(MainActivity.this).execute(n);
                 }
             }
         });
+
+        // Création de l'adaptateur pour la ListView
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        list.setAdapter(adapter);
     }
 
     public void updateProgress(int number) {
-        // Met a jour le nombre testé (pas actualisé tout le temps pour garder des performances)
-        //testing_number est un valeur ajouté dans res/values/strings.xml .
+        // Met à jour le nombre testé
         viewProgress.setText(getString(R.string.testing_number, number));
     }
 
-    //Update des champs qui donne les resultats
+    // Mise à jour des champs qui donnent les résultats
     public void updateResults(ArrayList<Integer> primeNumbers, long elapsedTime) {
-        // Création de l'adapater pour rentrer les valeurs de l'array dans la listView
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, primeNumbers);
-        list.setAdapter(adapter);
+        // Efface le contenu précédent
+        adapter.clear();
 
-        //Mise a jour du texte dans les champs tvProgressVal et tvTimeVal qui donne réspectivement :
-        // - le nombre total de nombre premier
-        // - le temps final de la procédure de calcul a la fin de l'AsyncTask
+        // Ajoute tous les nombres au format d'une seule ligne séparés par des virgules
+        StringBuilder formattedNumbers = new StringBuilder();
+        for (int i = 0; i < primeNumbers.size(); i++) {
+            if (i > 0) {
+                formattedNumbers.append(", ");
+            }
+            formattedNumbers.append(primeNumbers.get(i));
+        }
 
+        // Ajoute la ligne complète à l'adaptateur
+        adapter.add(formattedNumbers.toString());
+
+        // Mise à jour des autres vues
         viewProgress.setText(String.valueOf(primeNumbers.size()));
         viewTime.setText(String.valueOf(elapsedTime));
     }
-
 }
-
