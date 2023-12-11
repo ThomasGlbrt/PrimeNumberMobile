@@ -20,12 +20,13 @@ public class CustomArrayAdapter extends ArrayAdapter<Integer> {
         this.numbers = numbers;
     }
 
+    // Fonction pour la mise en forme de listView, ajoute une virgule entre les nombres
     private String formatNumbers() {
         StringBuilder formattedNumbers = new StringBuilder();
 
         for (int i = 0; i < numbers.size(); i++) {
             if (i > 0) {
-                formattedNumbers.append(", "); // Ajoute une virgule entre les nombres
+                formattedNumbers.append(", ");
             }
             formattedNumbers.append(String.valueOf(numbers.get(i)));
         }
@@ -33,6 +34,12 @@ public class CustomArrayAdapter extends ArrayAdapter<Integer> {
         return formattedNumbers.toString();
     }
 
+//      Cette méthode crée ou réutilise une vue pour chaque élément de la liste.
+//      Si la vue à réutiliser (convertView) est nulle, elle est créée en utilisant un
+//      layout prédéfini (android.R.layout.simple_list_item_1). Ensuite, le texte de
+//      la vue est défini en appelant la méthode formatNumbers(). Enfin, la vue est
+//      renvoyée pour être affichée à l'écran.
+//     
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
